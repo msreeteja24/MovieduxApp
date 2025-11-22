@@ -6,6 +6,9 @@ export default function MoviesGrid() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [genre, setGenre] = useState("All Genres");
+  const [rating, setRating] = useState("All Ratings");
+
   useEffect(() => {
     fetch("movies.json") //Here since we are in the same directory we are not writing the whole URL
       .then((response) => response.json()) //here we are converting the response to Json (later they will be available as Javascript objects)
@@ -16,8 +19,45 @@ export default function MoviesGrid() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleGenreChange = (e) => {
+    setGenre(e.target.value);
+  };
+
+  const handleRatingChange = (e) => {
+    setRating(e.target.value);
+  };
+
+  const matchesGenre = (movie, genre) => {
+    return (
+      genre === "All Genres" ||
+      movie.genre.toLowerCase() === genre.toLowerCase()
+    );
+  };
+
+  const matchesSearchTerm = (movie, searchTerm) => {
+    return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
+  };
+
+  const matchesRating = (movie, rating) => {
+    switch (rating) {
+      case "All Ratings":
+        return true;
+      case "Good":
+        return movie.rating >= 8;
+      case "Ok":
+        return movie.rating >= 5 && movie.rating < 8;
+      case "Bad":
+        return movie.rating < 5;
+      default:
+        return false;
+    }
+  };
+
+  const filteredMovies = movies.filter(
+    (movie) =>
+      matchesGenre(movie, genre) &&
+      matchesRating(movie, rating) &&
+      matchesSearchTerm(movie, searchTerm)
   );
 
   return (
@@ -29,6 +69,38 @@ export default function MoviesGrid() {
         value={searchTerm} //here we will give the state of Searchterm
         onChange={handleSearchChange} //whenever there is a change in the searchterm, the new state will be set in this function.  This will force the UI to get re rendered.
       ></input>
+
+      <div className="filter-bar">
+        <div className="filter-slot">
+          <label>Genere</label>
+          <select
+            className="filter-dropdown"
+            value={genre}
+            onChange={handleGenreChange}
+          >
+            <option>All Genres</option>
+            <option>Action</option>
+            <option>Drama</option>
+            <option>Fantasy</option>
+            <option>Horror</option>
+          </select>
+        </div>
+
+        <div className="filter-slot">
+          <label>Rating</label>
+          <select
+            className="filter-dropdown"
+            value={rating}
+            onChange={handleRatingChange}
+          >
+            <option>All Ratings</option>
+            <option>Good</option>
+            <option>Ok</option>
+            <option>Bad</option>
+          </select>
+        </div>
+      </div>
+
       <div className="movies-grid">
         {
           //Here the filteredMovie function is called and only the filtered movies are displayed.
