@@ -1,30 +1,32 @@
-import React from 'react';
-import '../styles.css';
+import React from "react";
+import "../styles.css";
 
-export default function MovieCard({movie}){
+export default function MovieCard({ movie, isWatchlisted, toggleWatchlist }) {
+  const handleError = (e) => (e.target.src = "images/default.jpg");
 
-    const handleError = (e) => 
-        e.target.src = "images/default.jpg";
-
-    const getRatingClass = (rating) => {
-        if(rating >=8){
-            return "rating-good";
-        } else if(rating >=5 && rating<8){
-            return "rating-ok";
-        }else{
-            return "rating-bad";
-        }
+  const getRatingClass = (rating) => {
+    if (rating >= 8) {
+      return "rating-good";
+    } else if (rating >= 5 && rating < 8) {
+      return "rating-ok";
+    } else {
+      return "rating-bad";
     }
+  };
 
-    return (
-        <div key={movie.id} className = 'movie-card'>
-            <img 
-            src = {`images/${movie.image}`} 
-            alt={movie.title}
-            onError={handleError}/>
-            <h3 className= 'movie-card-title'> {movie.title} </h3>
-            <p className = 'movie-card-genre' >{movie.genre}</p>
-            <p className = {`movie-card-rating ${getRatingClass(movie.rating)}`}> {movie.rating}</p>
-        </div>
-    );
+  return (
+    <div key={movie.id} className="movie-card">
+      <img
+        src={`images/${movie.image}`}
+        alt={movie.title}
+        onError={handleError}
+      />
+      <h3 className="movie-card-title"> {movie.title} </h3>
+      <p className="movie-card-genre">{movie.genre}</p>
+      <p className={`movie-card-rating ${getRatingClass(movie.rating)}`}>
+        {" "}
+        {movie.rating}
+      </p>
+    </div>
+  );
 }

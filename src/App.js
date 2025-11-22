@@ -20,7 +20,7 @@ function App() {
   /*So if the previous state includes the movieId then we will remove the id, other wise
   we us the spread operator and append the new movieId .
   Here we used !== to remove the existing moveie id*/
-  const toogleWatchlist = (movieId) => {
+  const toggleWatchlist = (movieId) => {
     setWatchlist((prev) =>
       prev.includes(movieId)
         ? prev.filter((id) => id !== movieId)
@@ -49,9 +49,24 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<MoviesGrid movies={movies}></MoviesGrid>}
+              element={
+                <MoviesGrid
+                  movies={movies}
+                  watchlist={watchlist}
+                  toggleWatchlist={toggleWatchlist}
+                ></MoviesGrid>
+              }
             ></Route>
-            <Route path="/watchlist" element={<Watchlist></Watchlist>}></Route>
+            <Route
+              path="/watchlist"
+              element={
+                <Watchlist
+                  movies={movies}
+                  watchlist={watchlist}
+                  toggleWatchlist={toggleWatchlist}
+                ></Watchlist>
+              }
+            ></Route>
           </Routes>
         </Router>
       </div>

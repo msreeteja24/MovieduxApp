@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles.css";
 import MovieCard from "./MovieCard";
 
-export default function MoviesGrid({ movies }) {
+export default function MoviesGrid({ movies, watchlist, toggleWactlist }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   //State hook for Genre and Rating
@@ -103,7 +103,12 @@ export default function MoviesGrid({ movies }) {
           //Here the filteredMovie function is called and only the filtered movies are displayed.
         }
         {filteredMovies.map((movie) => (
-          <MovieCard movie={movie} key={movie.id}></MovieCard>
+          <MovieCard
+            movie={movie}
+            key={movie.id}
+            toggleWatchlist={toggleWactlist}
+            isWatchlisted={watchlist.includes(movie.id)}
+          ></MovieCard>
         ))}
       </div>
     </div>
