@@ -6,6 +6,7 @@ export default function MoviesGrid() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  //State hook for Genre and Rating
   const [genre, setGenre] = useState("All Genres");
   const [rating, setRating] = useState("All Ratings");
 
@@ -15,6 +16,7 @@ export default function MoviesGrid() {
       .then((data) => setMovies(data)); //Here we are assigning them to the data objects.
   }, []);
 
+  //we created this function to change the state of the searchterm when the value is updated.
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -27,6 +29,7 @@ export default function MoviesGrid() {
     setRating(e.target.value);
   };
 
+  //logic to display results when the genre is matched.
   const matchesGenre = (movie, genre) => {
     return (
       genre === "All Genres" ||
@@ -53,6 +56,7 @@ export default function MoviesGrid() {
     }
   };
 
+  //Function to display the movies based on search fliter, genre and rating.
   const filteredMovies = movies.filter(
     (movie) =>
       matchesGenre(movie, genre) &&
