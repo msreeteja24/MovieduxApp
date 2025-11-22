@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles.css";
 import MovieCard from "./MovieCard";
 
-export default function MoviesGrid({ movies, watchlist, toggleWactlist }) {
+export default function MoviesGrid({ movies, watchlist, toggleWatchlist }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   //State hook for Genre and Rating
@@ -106,7 +106,7 @@ export default function MoviesGrid({ movies, watchlist, toggleWactlist }) {
           <MovieCard
             movie={movie}
             key={movie.id}
-            toggleWatchlist={toggleWactlist}
+            toggleWatchlist={toggleWatchlist}
             isWatchlisted={watchlist.includes(movie.id)}
           ></MovieCard>
         ))}

@@ -21,12 +21,29 @@ export default function MovieCard({ movie, isWatchlisted, toggleWatchlist }) {
         alt={movie.title}
         onError={handleError}
       />
-      <h3 className="movie-card-title"> {movie.title} </h3>
-      <p className="movie-card-genre">{movie.genre}</p>
-      <p className={`movie-card-rating ${getRatingClass(movie.rating)}`}>
-        {" "}
-        {movie.rating}
-      </p>
+      <div className="movie-card-info">
+        <h3 className="movie-card-title"> {movie.title} </h3>
+        <div>
+          <span className="movie-card-genre">{movie.genre}</span>
+          <span className={`movie-card-rating ${getRatingClass(movie.rating)}`}>
+            {movie.rating}
+          </span>
+        </div>
+
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={isWatchlisted}
+            onChange={() => toggleWatchlist(movie.id)}
+          ></input>
+
+          <span className="slider">
+            <span className="slider-label">
+              {isWatchlisted ? "In WatchList" : "Add to Watchlist"}
+            </span>
+          </span>
+        </label>
+      </div>
     </div>
   );
 }
